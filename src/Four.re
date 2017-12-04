@@ -1,4 +1,4 @@
-let str = ThreeIn.str;
+let str = FourIn.str;
 
 let rec remove_dups = (list) =>
   switch list {
