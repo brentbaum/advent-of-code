@@ -10,7 +10,7 @@ let word_list = Lib.split_on_char('\n', str) |> List.map(Lib.split_on_char(' '))
 
 let sort_string = (word) => word |> Js.String.split("") |> Js.Array.sortInPlace |> Array.to_list;
 
-let valid = (list) => List.length(remove_dups(list)) === List.length(list);
+let valid = (list) => List.length(remove_dups(list)) == List.length(list);
 
 let valid_anagrams = (list) => list |> List.map(sort_string) |> valid;
 
