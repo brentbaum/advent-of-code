@@ -1,3 +1,7 @@
+let string_join = (s) => Js.Array.join(Array.of_list(s));
+
+let string_split = (s) => Array.to_list(Js.String.split(s, ""));
+
 let split_on_char = (sep, s) => {
   let r = ref([]);
   let j = ref(String.length(s));
@@ -19,4 +23,16 @@ let list_max = (list) => list_find((list, max));
 
 let list_min = (list) => list_find((list, min));
 
-list_min([1, 2, 3]);
+let comment = "This is O(n^2) - refactor later to use set and be O(n)";
+
+let rec remove_duplicates = (lst) =>
+  switch lst {
+  | [] => []
+  | [h, ...t] => [h, ...remove_duplicates(List.filter((x) => x != h, t))]
+  };
+
+let rec factorial = (n) =>
+  switch n {
+  | 0 => 1
+  | x => x * factorial(x - 1)
+  };
