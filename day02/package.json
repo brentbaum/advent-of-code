@@ -1,0 +1,18 @@
+{
+  "name": "day02",
+  "private": true,
+  "version": "0.0.0",
+  "repository": "brentbaum/advent-of-code",
+  "license": "MIT",
+  "scripts": {
+    "build": "bsb -make-world",
+    "dev": "yarn build -w",
+    "clean": "bsb -clean-world",
+    "prestart": "yarn build",
+    "pretest": "yarn build",
+    "start": "node src/main.bs"
+  },
+  "devDependencies": {
+    "bs-platform": "^2.1.0"
+  }
+}
