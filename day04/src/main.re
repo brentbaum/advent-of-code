@@ -6,11 +6,11 @@ let rec remove_dups = (list) =>
   | [h, ...t] => [h, ...remove_dups(List.filter((x) => x != h, t))]
   };
 
-let word_list = Lib.split_on_char('\n', str) |> List.map(Lib.split_on_char(' '));
+let word_list = str |> String.split('\n') |> List.map(String.split(' '));
 
 let sort_string = (word) => word |> Js.String.split("") |> Js.Array.sortInPlace |> Array.to_list;
 
-let valid = (list) => List.length(remove_dups(list)) == List.length(list);
+let valid = (list) => list |> remove_dups |> List.length == List.length(list);
 
 let valid_anagrams = (list) => list |> List.map(sort_string) |> valid;
 

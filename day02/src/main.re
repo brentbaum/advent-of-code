@@ -1,8 +1,5 @@
 let parse_matrix = (str) =>
-  str
-  |> Lib.split_on_char('\n')
-  |> List.map(Lib.split_on_char('\t'))
-  |> List.map(List.map(int_of_string));
+  str |> String.split("\n") |> List.map(String.split("\t")) |> List.map(List.map(int_of_string));
 
 let list_find =
   fun
