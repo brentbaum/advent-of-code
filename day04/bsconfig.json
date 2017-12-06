@@ -14,9 +14,6 @@
   "bsc-flags": [
     "-bs-super-errors"
   ],
-  "bs-dev-dependencies": [
-    "bs-jest"
-  ],
   "namespace": true,
   "refmt": 3
 }

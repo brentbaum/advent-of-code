@@ -363,12 +363,6 @@ browser-resolve@^1.11.2:
   dependencies:
     resolve "1.1.7"
 
-bs-jest@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/bs-jest/-/bs-jest-0.2.0.tgz#62576e00c35f069d7681b9bb9bfd744dc7197eb7"
-  dependencies:
-    jest "^21.2.1"
-
 bs-platform@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-2.1.0.tgz#63560ff8f7142c9c0631559df1c35590b9f6d8b2"

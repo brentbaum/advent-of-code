@@ -1,5 +1,5 @@
 /* First approach - without pattern matching */
-let instructions = FiveIn.str |> String.split("\n") |> List.map(int_of_string) |> Array.of_list;
+let instructions = Input.input |> String.split("\n") |> List.map(int_of_string) |> Array.of_list;
 
 let touch = (item) => item >= 3 ? item - 1 : item + 1;
 
