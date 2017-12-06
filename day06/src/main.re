@@ -42,9 +42,19 @@ let store_banks = (state_map, banks) => {
 let rec solve = (state_map, ~iterations=0, banks) => {
   let redistributed_banks = redistribute_bank(banks);
   let repeat = store_banks(state_map, banks);
-  repeat ? iterations + 1 : solve(state_map, redistributed_banks, ~iterations=iterations + 1)
+  repeat ?
+    (iterations + 1, redistributed_banks) :
+    solve(state_map, redistributed_banks, ~iterations=iterations + 1)
 };
 
 let state_map = ref(StringSet.of_list([]));
 
-Js.log(solve(state_map, Array.of_list(Input.list)));
+let (first, solution) = solve(state_map, Array.of_list(Input.list));
+
+Js.log("Part one: " ++ string_of_int(first));
+
+let state_map = ref(StringSet.of_list([]));
+
+let (second, _) = solve(state_map, solution);
+
+Js.log("Part one: " ++ string_of_int(second));
