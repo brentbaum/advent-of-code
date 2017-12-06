@@ -7,8 +7,6 @@ let rec find_index = (a, ~n=0, x) =>
     find_index(a, x, ~n=n + 1)
   };
 
-let select_bank = (list) => Array.fold_left(max, (-1), list) |> find_index(list);
-
 let inc_bank = (position, list) => {
   list[position] = list[position] + 1;
   list
@@ -17,7 +15,7 @@ let inc_bank = (position, list) => {
 let stringify = (list) => String.concat(" ", Array.to_list(Array.map(string_of_int, list)));
 
 let redistribute_bank = (banks) => {
-  let maxIndex = select_bank(banks);
+  let maxIndex = Array.fold_left(max, (-1), banks) |> find_index(banks);
   let blockCount = banks[maxIndex];
   let incIndex = (index) => (index + 1) mod Array.length(banks);
   let rec step = (~index=incIndex(maxIndex), ~blocks=blockCount - 1, bankList) => {
@@ -33,28 +31,23 @@ let redistribute_bank = (banks) => {
 
 let store_banks = (state_map, banks) => {
   let next_bank_str = stringify(banks);
-  let repeat = StringSet.exists((s) => s == next_bank_str, state_map^);
-  let next_state_set = StringSet.add(next_bank_str, state_map^);
-  state_map := next_state_set;
-  repeat
+  let repeat = StringSet.exists((s) => s == next_bank_str, state_map);
+  let next_state_set = StringSet.add(next_bank_str, state_map);
+  (repeat, next_state_set)
 };
 
-let rec solve = (state_map, ~iterations=0, banks) => {
+let rec solve = (~state_map=StringSet.of_list([]), ~iterations=0, banks) => {
   let redistributed_banks = redistribute_bank(banks);
-  let repeat = store_banks(state_map, banks);
+  let (repeat, next_state_map) = store_banks(state_map, banks);
   repeat ?
     (iterations + 1, redistributed_banks) :
-    solve(state_map, redistributed_banks, ~iterations=iterations + 1)
+    solve(~state_map=next_state_map, redistributed_banks, ~iterations=iterations + 1)
 };
 
-let state_map = ref(StringSet.of_list([]));
-
-let (first, solution) = solve(state_map, Array.of_list(Input.list));
+let (first, solution) = solve(Array.of_list(Input.list));
 
 Js.log("Part one: " ++ string_of_int(first));
 
-let state_map = ref(StringSet.of_list([]));
-
-let (second, _) = solve(state_map, solution);
+let (second, _) = solve(solution);
 
 Js.log("Part one: " ++ string_of_int(second));
