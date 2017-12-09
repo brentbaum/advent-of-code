@@ -1,15 +1,19 @@
-let rec step = (string, stack, level, score) =>
+let rec step = (string, stack, level, score, garbage) =>
   switch (string, stack) {
-  | ([], _) => score
-  | ([_, ...restString], ['!', ...restStack]) => step(restString, restStack, level, score)
-  | (['!', ...restString], stack) => step(restString, List.append(['!'], stack), level, score)
-  | (['>', ...restString], ['<', ...restStack]) => step(restString, restStack, level, score)
-  | ([_, ...restString], ['<', ...restStack]) => step(restString, stack, level, score)
+  | ([], _) => (score, garbage)
+  | ([_, ...restString], ['!', ...restStack]) => step(restString, restStack, level, score, garbage)
+  | (['!', ...restString], stack) =>
+    step(restString, List.append(['!'], stack), level, score, garbage)
+  | (['>', ...restString], ['<', ...restStack]) =>
+    step(restString, restStack, level, score, garbage)
+  | ([_, ...restString], ['<', ...restStack]) => step(restString, stack, level, score, garbage + 1)
   | (['}', ...restString], ['{', ...restStack]) =>
-    step(restString, restStack, level - 1, score + level)
-  | (['<', ...restString], stack) => step(restString, List.append(['<'], stack), level, score)
-  | (['{', ...restString], stack) => step(restString, List.append(['{'], stack), level + 1, score)
-  | ([_, ...restString], stack) => step(restString, stack, level, score)
+    step(restString, restStack, level - 1, score + level, garbage)
+  | (['<', ...restString], stack) =>
+    step(restString, List.append(['<'], stack), level, score, garbage)
+  | (['{', ...restString], stack) =>
+    step(restString, List.append(['{'], stack), level + 1, score, garbage)
+  | ([_, ...restString], stack) => step(restString, stack, level, score, garbage)
   | _ => raise(Failure("Unmatched case"))
   };
 
@@ -23,4 +27,4 @@ let explode = (s) => {
   exp(String.length(s) - 1, [])
 };
 
-Js.log(step(explode(Input.input), [], 0, 0));
+Js.log(step(explode(Input.input), [], 0, 0, 0));
