@@ -1,0 +1,19 @@
+{
+  "name": "day06",
+  "version": "0.0.0",
+  "sources": [
+    {
+      "dir": "src"
+    }
+  ],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bsc-flags": [
+    "-bs-super-errors"
+  ],
+  "namespace": true,
+  "refmt": 3
+}
