@@ -10,6 +10,7 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/*.bs.js": true
+    "**/*.bs.js": true,
+    "**/lib": true
   }
 }
