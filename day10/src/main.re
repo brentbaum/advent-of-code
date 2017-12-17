@@ -67,9 +67,7 @@ let generateMappings = (matrix) => {
   (ids, map^)
 };
 
-let solve2 = () => {
-  let (ids, map) = baseString |> makeMatrix |> generateMappings;
+let solve2 = (str) => {
+  let (ids, map) = str |> makeMatrix |> generateMappings;
   Twelve.countGroups(ids, map)
 };
-
-Js.log(solve2());
