@@ -10,10 +10,19 @@ let factors = {a: Int64.of_int(16807), b: Int64.of_int(48271)};
 
 let divisor = Int64.of_int(2147483647);
 
-let generateNext = (state) => {
+let rec generateNext = (n, factor, divisor, conditionalDivisor) => {
+  let next = Int64.rem(Int64.mul(n, factor), divisor);
+  if (Int64.rem(next, conditionalDivisor) == Int64.of_int(0)) {
+    next
+  } else {
+    generateNext(next, factor, divisor, conditionalDivisor)
+  }
+};
+
+let generateNextPair = (state) => {
   let next = {
-    a: Int64.rem(Int64.mul(state.a, factors.a), divisor),
-    b: Int64.rem(Int64.mul(state.b, factors.b), divisor)
+    a: generateNext(state.a, factors.a, divisor, Int64.of_int(4)),
+    b: generateNext(state.b, factors.b, divisor, Int64.of_int(8))
   };
   next
 };
@@ -38,8 +47,8 @@ let pairs = ref(start);
 
 let count = ref(0);
 
-for (x in 0 to 40000000) {
-  pairs := generateNext(pairs^);
+for (x in 0 to 5000000) {
+  pairs := generateNextPair(pairs^);
   if (match(pairs^)) {
     Js.log("match!");
     count := count^ + 1
