@@ -1,18 +1,20 @@
 type state = {
-  a: int64,
-  b: int64
+  a: int,
+  b: int
 };
 
-let start = {a: Int64.of_int(634), b: Int64.of_int(301)};
+let start = {a: 634, b: 301};
 
 /* let start = {a: Int64.of_int(65), b: Int64.of_int(8921)};*/
-let factors = {a: Int64.of_int(16807), b: Int64.of_int(48271)};
+let factors = {a: 16807, b: 48271};
 
-let divisor = Int64.of_int(2147483647);
+let divisor = 2147483647;
 
 let rec generateNext = (n, factor, divisor, conditionalDivisor) => {
-  let next = Int64.rem(Int64.mul(n, factor), divisor);
-  if (Int64.rem(next, conditionalDivisor) == Int64.of_int(0)) {
+  let next =
+    Int64.rem(Int64.mul(Int64.of_int(n), Int64.of_int(factor)), Int64.of_int(divisor))
+    |> Int64.to_int;
+  if (next mod conditionalDivisor == 0) {
     next
   } else {
     generateNext(next, factor, divisor, conditionalDivisor)
@@ -21,8 +23,8 @@ let rec generateNext = (n, factor, divisor, conditionalDivisor) => {
 
 let generateNextPair = (state) => {
   let next = {
-    a: generateNext(state.a, factors.a, divisor, Int64.of_int(4)),
-    b: generateNext(state.b, factors.b, divisor, Int64.of_int(8))
+    a: generateNext(state.a, factors.a, divisor, 4),
+    b: generateNext(state.b, factors.b, divisor, 8)
   };
   next
 };
@@ -36,7 +38,6 @@ let rec pad_left = (str) =>
 
 let getBinaryTail = (n) =>
   n
-  |> Int64.to_int
   |> Js.Int.toStringWithRadix(~radix=2)
   |> pad_left
   |> ((a) => String.sub(a, String.length(a) - 16, 16));
